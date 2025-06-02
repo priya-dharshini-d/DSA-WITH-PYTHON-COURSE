@@ -1,0 +1,10 @@
+Introduction to Sorting and Its Importance
+
+Sorting Benefits:
+
+- Enables binary search.
+- Helps in finding median values easily.
+- Assists in identifying unique values or duplicates in a list.
+- Facilitates the creation of frequency tables for data analysis.
+
+Note: Binary Search Works efficiently in logarithmic time but requires a sorted list.
