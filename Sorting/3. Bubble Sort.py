@@ -1,3 +1,6 @@
+# Iterative method
+
+
 # Using for loop alone
 def bubbleSort(arr):
     n = len(arr)
@@ -56,6 +59,8 @@ def bubble_sort_for_while(arr):
                 swapped = True
     return arr
 
+
+
 # Recursive algorithm
 
 def bubble_sort_recursive(arr, n=None):
@@ -73,6 +78,87 @@ def bubble_sort_recursive(arr, n=None):
     
     # Recursive call for remaining array
     return bubble_sort_recursive(arr, n - 1)
+
+
+
+
+
+
+# Descending order
+
+# Iterative method
+
+# Using for loop alone - Descending
+def bubbleSort(arr):
+    n = len(arr)
+    for i in range(n):
+        swapped = False
+        for j in range(0, n - i - 1):
+            if arr[j] < arr[j + 1]:  # Changed to < for descending
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+        if not swapped:
+            break
+
+
+# Using while loop alone - Descending
+def bubble_sort_while(arr):
+    n = len(arr)
+    swapped = True
+    i = 0
+    while swapped:
+        swapped = False
+        j = 0
+        while j < n - i - 1:
+            if arr[j] < arr[j + 1]:  # Changed to < for descending
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+            j += 1
+        i += 1
+    return arr
+
+
+# Using for and while loop - Descending
+def bubble_sort_for_while(arr):
+    n = len(arr)
+    i = 0
+    while i < n:
+        for j in range(0, n - i - 1):
+            if arr[j] < arr[j + 1]:  # Changed to < for descending
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+        i += 1
+    return arr
+
+
+# Using for and while with swapped flag - Descending
+def bubble_sort_for_while_optimized(arr):
+    n = len(arr)
+    swapped = True
+    while swapped:
+        swapped = False
+        for j in range(n - 1):
+            if arr[j] < arr[j + 1]:  # Changed to < for descending
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+    return arr
+
+
+# Recursive algorithm - Descending
+def bubble_sort_recursive(arr, n=None):
+    if n is None:
+        n = len(arr)
+    
+    if n == 1:
+        return arr
+
+    for i in range(n - 1):
+        if arr[i] < arr[i + 1]:  # Changed to < for descending
+            arr[i], arr[i + 1] = arr[i + 1], arr[i]
+    
+    return bubble_sort_recursive(arr, n - 1)
+
+
+
 
 
 # Bubble Sort for Linked List by Swapping nodes
