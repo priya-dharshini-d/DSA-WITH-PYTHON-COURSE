@@ -115,6 +115,107 @@ def partition(arr):
     for i in range(n):
         arr[i] = temp[i]
 
+
+
+
+# Descending order
+
+# =========================
+# Recursive Algorithm (Stable but not in-place) - Descending
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+
+    pivot = arr[0]  # Can also use arr[-1], middle, or random.choice(arr)
+
+    left = [x for x in arr if x > pivot]         # > for descending
+    pivot_list = [x for x in arr if x == pivot]
+    right = [x for x in arr if x < pivot]
+
+    return quick_sort(left) + pivot_list + quick_sort(right)
+
+
+# =========================
+# Lomuto Partition Scheme (In-place) - Descending
+
+def partition_lomuto(arr, low, high):
+    pivot = arr[high]
+    i = low - 1
+
+    for j in range(low, high):
+        if arr[j] > pivot:  # > for descending
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1
+
+def quickSort_lomuto(arr, low, high):
+    if low < high:
+        pi = partition_lomuto(arr, low, high)
+        quickSort_lomuto(arr, low, pi - 1)
+        quickSort_lomuto(arr, pi + 1, high)
+
+
+# =========================
+# Hoare’s Partition Scheme (In-place, uses two while loops) - Descending
+
+def partition_hoare(arr, start, end):
+    pivot = arr[start]
+    i = start - 1
+    j = end + 1
+
+    while True:
+        while True:
+            i += 1
+            if arr[i] <= pivot:  # <= for descending
+                break
+        while True:
+            j -= 1
+            if arr[j] >= pivot:  # >= for descending
+                break
+        if i >= j:
+            return j
+        arr[i], arr[j] = arr[j], arr[i]
+
+def quick_sort_hoare(arr, start, end):
+    if start < end:
+        pi = partition_hoare(arr, start, end)
+        quick_sort_hoare(arr, start, pi)
+        quick_sort_hoare(arr, pi + 1, end)
+
+
+# =========================
+# Naive Partition Scheme (uses extra space) - Descending
+
+def partition_naive(arr):
+    n = len(arr)
+    pivot = arr[n - 1]
+
+    temp = [0] * n
+    idx = 0
+
+    # First: fill elements >= pivot (descending)
+    for i in range(n):
+        if arr[i] >= pivot:
+            temp[idx] = arr[i]
+            idx += 1
+
+    # Second: fill elements < pivot
+    for i in range(n):
+        if arr[i] < pivot:
+            temp[idx] = arr[i]
+            idx += 1
+
+    # Copy back to original
+    for i in range(n):
+        arr[i] = temp[i]
+
+
+
+
+
+
 # Iterative Quick sort
 
 
