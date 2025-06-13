@@ -124,6 +124,75 @@ print(array)  # Output will be sorted in descending order
 
 
 
+
+# Iterative method
+
+# Iterative (Bottom-Up) Merge Sort in Python with understandable variable names
+def merge(array, start, middle, end, descending=False):
+    # Create temporary arrays for left and right halves
+    left_size = middle - start + 1
+    right_size = end - middle
+
+    left_half = array[start:start + left_size]
+    right_half = array[middle + 1:middle + 1 + right_size]
+
+    index_left = 0
+    index_right = 0
+    index_merged = start
+
+    # Merge the temp arrays back into the original array
+    while index_left < left_size and index_right < right_size:
+        if (left_half[index_left] <= right_half[index_right]) ^ descending:
+            array[index_merged] = left_half[index_left]
+            index_left += 1
+        else:
+            array[index_merged] = right_half[index_right]
+            index_right += 1
+        index_merged += 1
+
+    # Copy any remaining elements from left_half
+    while index_left < left_size:
+        array[index_merged] = left_half[index_left]
+        index_left += 1
+        index_merged += 1
+
+    # Copy any remaining elements from right_half
+    while index_right < right_size:
+        array[index_merged] = right_half[index_right]
+        index_right += 1
+        index_merged += 1
+
+
+def merge_sort_iterative(array, descending=False):
+    total_length = len(array)
+    subarray_size = 1
+
+    # Loop through sizes of subarrays to be merged
+    while subarray_size < total_length:
+        for left_start in range(0, total_length, 2 * subarray_size):
+            middle = min(left_start + subarray_size - 1, total_length - 1)
+            right_end = min(left_start + 2 * subarray_size - 1, total_length - 1)
+
+            if middle < right_end:
+                merge(array, left_start, middle, right_end, descending)
+
+        subarray_size *= 2
+
+
+# Example usage
+if __name__ == "__main__":
+    sample_array = [38, 27, 43, 3, 9, 82, 10]
+    print("Original:", sample_array)
+
+    merge_sort_iterative(sample_array, descending=False)
+    print("Sorted Ascending:", sample_array)
+
+    merge_sort_iterative(sample_array, descending=True)
+    print("Sorted Descending:", sample_array)
+
+
+
+
 # Merge Sort for Linked Lists
 
 
