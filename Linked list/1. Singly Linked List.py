@@ -27,6 +27,8 @@ class LinkedList:
         e. Delete by Node 
 6. Modify a Singly Linked List
 7. Reversing a Singly Linked List
+8. Delete Entire List
+ 
 """
 
 # --------------- +  ==================================================== + --------------- #
@@ -1065,3 +1067,16 @@ class LinkedList:
   
 
 # --------------- +  ==================================================== + --------------- #
+
+# 8. Delete Entire List
+
+class LinkedList:
+  
+    def __init__(self):
+        self.head = None
+        self.length = 0  # initialize length
+    
+    def delete_entire_list(self):
+        self.head = None
+        self.length = 0
+        print("List has been cleared.")
