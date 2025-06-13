@@ -194,3 +194,36 @@ sorted_arr = selection_sort_strings(arr)
 print("\nSorted array:")
 print(sorted_arr)
 
+
+
+
+# Descending order 
+
+# Iterative
+def selection_sort(arr):
+    n = len(arr)
+    for i in range(n - 1):
+        max_idx = i  # 🟢 Changed: track index of the max element
+        for j in range(i + 1, n):
+            if arr[j] > arr[max_idx]:  # 🟢 Changed: use > for descending
+                max_idx = j
+
+        if i != max_idx:
+            arr[i], arr[max_idx] = arr[max_idx], arr[i]
+    return arr
+
+# Recursive
+def selection_sort_recursive(arr, i=0):
+    n = len(arr)
+    if i >= n - 1:
+        return
+
+    max_idx = i  # 🟢 Changed: track max instead of min
+    for j in range(i + 1, n):
+        if arr[j] > arr[max_idx]:  # 🟢 Changed: use > for descending
+            max_idx = j
+
+    if max_idx != i:
+        arr[i], arr[max_idx] = arr[max_idx], arr[i]
+
+    selection_sort_recursive(arr, i + 1)
