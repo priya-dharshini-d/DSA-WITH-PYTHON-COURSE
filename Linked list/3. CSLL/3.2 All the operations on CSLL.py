@@ -340,6 +340,7 @@ List is empty
 
 """
 
+#+__________________________________________________________________________________________________________________+
 
 # Reversing the CSLL
 
@@ -456,4 +457,45 @@ Reversed Iteratively:
 
 """
 
+#+__________________________________________________________________________________________________________________+
+
+#  Searching
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+def search_circular_list(last, key):
+    
+    if last is None:
+        return False
+
+    current = last.next                                      # Start from head
+    
+    while True:
+        if current.data == key:
+            return True
+        current = current.next
+        if current == last.next:                             # Completed a full circle
+            break
+    return False
+
+# Example: Create CSLL with nodes 2 → 3 → 4
+
+first = Node(2)
+second = Node(3)
+third = Node(4)
+
+first.next = second
+second.next = third
+third.next = first                                           # Make it circular
+last = third                                                 # Mark last node
+
+# Search for a key
+key = 3
+found = search_circular_list(last, key)
+print(f"Key {key} found?" , found)
+
+#+__________________________________________________________________________________________________________________+
 
