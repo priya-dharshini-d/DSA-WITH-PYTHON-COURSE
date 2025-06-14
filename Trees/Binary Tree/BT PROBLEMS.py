@@ -954,3 +954,61 @@ def find_LCA(root, p, q):
     return left_lca if left_lca else right_lca
 
 #+_____________________________________________________________________________________________+
+
+
+"""
+Finding the level of a node in a Binary Tree using recursion.  Using Recursion - O(n) Time and O(h) Space
+
+This version also includes:
+
+    A check if the node exists
+
+    Start level from 1 (as the root is at level 1)
+
+    Returns -1 if the node is not found
+"""
+
+class Node:
+    def __init__(self, val):
+        self.data = val
+        self.left = None
+        self.right = None
+
+
+def getLevel(root, target, level):
+    if root is None:
+        return -1                                              # Base case: key not found 
+          
+    if root.data == target:
+        return level                                           # Node found, return its level
+
+    left_level = getLevel(root.left, target, level + 1)        # Search in left subtree
+    if left_level != -1:
+        return left_level                                      # If found in left, return it
+
+    return getLevel(root.right, target, level + 1)             # Else, search in right subtree
+
+# Example usage
+if __name__ == "__main__":
+    
+    # Binary Tree structure:
+    #       1
+    #      / \
+    #     2   3
+    #    / \ / \
+    #   4  5 6  7
+    root = Node(1)
+    root.left = Node(2)
+    root.right = Node(3)
+    root.left.left = Node(4)
+    root.left.right = Node(5)
+    root.right.left = Node(6)
+    root.right.right = Node(7)
+
+    target = 5
+    print("Level of node", target, "is:", getLevel(root, target, 1))  # Output: 3
+
+    target = 10
+    print("Level of node", target, "is:", getLevel(root, target, 1))  # Output: -1
+
+#+_____________________________________________________________________________________________+
