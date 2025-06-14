@@ -251,4 +251,87 @@ if __name__ == "__main__":
 """
 
 
+#+___________________________________________________________________________________+
+
+"""
+ Delete a Node from a Binary Tree (Not BST)
+
+ 
+🧠 Concept:
+
+In a normal binary tree (not BST), to delete a node with a given value:
+
+    Find the node to be deleted.
+
+    Find the deepest and rightmost node in the tree.
+
+    Replace the target node's value with that deepest node’s value.
+
+    Delete the deepest node.
+
+    This ensures the structure of the binary tree remains intact.
+
+🧾 Algorithm Steps
+
+    Do a level order traversal to find:
+
+           - The node to delete (target).
+
+           - The deepest node.
+
+           - The parent of the deepest node.
+
+    Replace target.data = deepest.data.
+
+    Remove the deepest node by setting its parent's left or right to None.
+
+"""
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+def delete_node(root, key):
+    
+    if root is None:
+        return None
+
+    if root.left is None and root.right is None:
+        if root.data == key:
+            return None
+        else:
+            return root
+
+    # Level order traversal
+    queue = [root]
+    target = None
+    last = None
+    parent_of_last = None
+
+    while queue:
+        last = queue.pop(0)
+        if last.data == key:
+            target = last
+
+        if last.left:
+            parent_of_last = last
+            queue.append(last.left)
+        if last.right:
+            parent_of_last = last
+            queue.append(last.right)
+
+    if target:
+        # Replace target data with deepest node data
+        target.data = last.data
+
+        # Delete deepest node
+        if parent_of_last.right == last:
+            parent_of_last.right = None
+        elif parent_of_last.left == last:
+            parent_of_last.left = None
+
+    return root
+
+
 
