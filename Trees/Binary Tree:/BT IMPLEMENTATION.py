@@ -397,4 +397,157 @@ set_right('F', 2)
 print_tree()
 
 #+___________________________________________________________________________________+
+# Check whether a given binary tree is perfect or not
 
+"""
+
+Given a Binary Tree, the task is to check whether the given Binary Tree is a perfect Binary Tree or not.
+
+Note:
+
+A Binary tree is a Perfect Binary Tree in which all internal nodes have two children and all leaves are at the same level.
+
+A Perfect Binary Tree of height h has 2h – 1 nodes.
+
+
+# [Expected Approach - 1] Using Recursive Method - O(n) Time and O(h) Space
+
+The idea is to find the depth of the tree (lets say d) 
+and then check that all the internal nodes have two child nodes and all leaf nodes are at depth d. 
+
+If not, then return false.
+
+"""
+
+
+# Recursive function
+
+class Node:
+    def __init__(self, x):
+        self.data = x
+        self.left = None
+        self.right = None
+
+def depth(root):        # Function to find depth of tree.
+    if root is None:
+        return 0
+    return 1 + max(depth(root.left), depth(root.right))
+
+def isPerfectRecur(root, d):
+    
+    if root is None:         # Empty tree is also perfect 
+        return True
+    
+    # If node is leaf, check if it is at depth d.
+    if root.left is None and root.right is None:
+        return d == 1
+    
+    # If internal node does not have left or right node, return false.
+    if root.left is None or root.right is None:
+        return False
+    
+    # Check left and right subtree
+    return isPerfectRecur(root.left, d-1) and isPerfectRecur(root.right, d-1)
+
+def isPerfect(root):
+    
+    # Find depth of tree 
+    d = depth(root)
+    
+    return isPerfectRecur(root, d)
+
+if __name__ == "__main__":
+    
+    # Binary tree 
+    #           10
+    #        /     \  
+    #      20       30  
+    #     /  \     /  \
+    #   40    50  60   70
+    root = Node(10)
+    root.left = Node(20)
+    root.right = Node(30)
+    root.left.left = Node(40)
+    root.left.right = Node(50)
+    root.right.left = Node(60)
+    root.right.right = Node(70)
+
+    if isPerfect(root):
+        print("True")
+    else:
+        print("False")
+
+
+
+
+
+"""
+[Expected Approach - 2] Using level order traversal - O(n) Time and O(n) Space
+
+The idea is to perform a level-order traversal of the binary tree using a queue. 
+
+By traversing the tree level by level, we can check if the tree satisfies the conditions of a perfect binary tree.
+"""
+
+
+from collections import deque
+
+class Node:
+    def __init__(self, x):
+        self.data = x
+        self.left = None
+        self.right = None
+
+def isPerfect(root):
+    
+    if root is None:
+        return True
+    
+    q = deque([root])
+    
+    # to store the expected node count at a given level.
+    nodeCnt = 1
+    
+    while q:
+        size = len(q)
+        
+        # If number of expected nodes is not same, return False.
+        if size != nodeCnt:
+            return False
+        
+        while size > 0:
+            curr = q.popleft()
+            if curr.left:
+                q.append(curr.left)
+            if curr.right:
+                q.append(curr.right)
+            size -= 1
+        
+        # Next level will contain twice number of nodes.
+        nodeCnt *= 2
+    
+    return True
+
+if __name__ == "__main__":
+    
+    # Binary tree 
+    #           10
+    #        /     \  
+    #      20       30  
+    #     /  \     /  \
+    #   40    50  60   70
+    root = Node(10)
+    root.left = Node(20)
+    root.right = Node(30)
+    root.left.left = Node(40)
+    root.left.right = Node(50)
+    root.right.left = Node(60)
+    root.right.right = Node(70)
+
+    if isPerfect(root):
+        print("True")
+    else:
+        print("False")
+
+
+#+___________________________________________________________________________________+
