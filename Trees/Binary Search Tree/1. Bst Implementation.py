@@ -517,6 +517,7 @@ Auxiliary Space: O(H), Where H is the height of the tree
 
 #+________________________________________________________________________________________________________________________+
 
+# Balance a Binary Search Tree
 # Python program to convert a left unbalanced BST to a balanced BST
 
 class Node:
@@ -614,3 +615,5 @@ Also the extra space taken by recursion call stack is O(h) where h is the height
 """
 
 #+________________________________________________________________________________________________________________________+
+
+
