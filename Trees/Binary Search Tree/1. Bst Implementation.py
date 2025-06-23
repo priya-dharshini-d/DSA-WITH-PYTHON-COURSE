@@ -10,12 +10,12 @@ class Node:
 def insert(root, key):
     if root is None:
         return Node(key)
-    if root.val == key:
-            return root
+    if root.val == key:         #🔸 Duplicate key — BSTs usually don't allow duplicates.🔸 So we return the current node unchanged, without inserting anything.
+        return root
     if root.val < key:
-            root.right = insert(root.right, key)
+        root.right = insert(root.right, key)
     else:
-            root.left = insert(root.left, key)
+        root.left = insert(root.left, key)
     return root
 
 
