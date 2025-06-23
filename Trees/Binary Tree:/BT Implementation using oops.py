@@ -182,12 +182,78 @@ call like this bt.inorder(bt.root)  # Correct call
 #______________________________________________________________________________________________________________________________
 
 
+# Iterative Code
 
+from collections import deque
 
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
 
+class BinaryTree:
+    def __init__(self, root_data):
+        self.root = Node(root_data)
 
+    def in_order_iterative(self):
+        print("In-order (iterative):", end=' ')
+        stack = []
+        current = self.root
+        while stack or current:
+            if current:
+                stack.append(current)
+                current = current.left
+            else:
+                current = stack.pop()
+                print(current.data, end=' ')
+                current = current.right
+        print()
 
+    def pre_order_iterative(self):
+        print("Pre-order (iterative):", end=' ')
+        if self.root is None:
+            return
+        stack = [self.root]
+        while stack:
+            node = stack.pop()
+            print(node.data, end=' ')
+            if node.right:
+                stack.append(node.right)
+            if node.left:
+                stack.append(node.left)
+        print()
 
+    def post_order_iterative(self):
+        print("Post-order (iterative):", end=' ')
+        if self.root is None:
+            return
+        stack1 = [self.root]
+        stack2 = []
+        while stack1:
+            node = stack1.pop()
+            stack2.append(node)
+            if node.left:
+                stack1.append(node.left)
+            if node.right:
+                stack1.append(node.right)
+        while stack2:
+            print(stack2.pop().data, end=' ')
+        print()
+
+    def bfs_iterative(self):
+        print("Level-order BFS:", end=' ')
+        if self.root is None:
+            return
+        queue = deque([self.root])
+        while queue:
+            node = queue.popleft()
+            print(node.data, end=' ')
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        print()
 
 
 
