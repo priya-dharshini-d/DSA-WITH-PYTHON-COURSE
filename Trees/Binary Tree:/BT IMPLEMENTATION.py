@@ -58,6 +58,8 @@ if __name__ == "__main__":
     print("\nLevel order: ", end='')
     bfs(root)
 
+#+______________________________________________________________________________________________________________________________+
+
 # This function builds a Binary Tree from a list of values assuming the tree is stored in level-order (like a binary heap).
 
 class Node:
@@ -80,7 +82,7 @@ def build_Tree(values):
     return nodes[0]  # root of the tree
 
 
-
+#+______________________________________________________________________________________________________________________________+
 
 # Constructing BT if preorder is given (null pointers are also given)
 class TreeNode:
@@ -122,6 +124,7 @@ tree.create(preorder)
 
 tree.inorder_traversal(tree.root)
 
+#+______________________________________________________________________________________________________________________________+
 
 """
 ✅ 1. Binary Tree from Inorder + Preorder
@@ -168,6 +171,8 @@ preorder = [1, 2, 4, 5, 3, 6]
 builder = TreeBuilder()
 tree_root = builder.build_tree_from_in_pre(inorder, preorder)
 
+#+______________________________________________________________________________________________________________________________+
+
 """
 ✅ 2. Binary Tree from Inorder + Postorder
 📌 Logic:
@@ -200,6 +205,7 @@ class TreeBuilder:
             return root
 
         return build(0, len(inorder) - 1)
+        
 #+__________________________________________________________________________________________________+
 
 #To find max element in BT
@@ -332,6 +338,7 @@ def delete_node(root, key):
             parent_of_last.left = None
 
     return root
+    
 
 #+___________________________________________________________________________________+
 
@@ -395,6 +402,7 @@ set_left('D', 1)
 set_right('E', 1)
 set_right('F', 2)
 print_tree()
+
 
 #+___________________________________________________________________________________+
 # Check whether a given binary tree is perfect or not
@@ -479,7 +487,7 @@ if __name__ == "__main__":
 
 
 
-
+#+______________________________________________________________________________________________________________________________+
 
 """
 [Expected Approach - 2] Using level order traversal - O(n) Time and O(n) Space
