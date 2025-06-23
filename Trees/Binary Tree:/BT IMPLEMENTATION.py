@@ -59,6 +59,64 @@ if __name__ == "__main__":
     bfs(root)
 
 #+______________________________________________________________________________________________________________________________+
+    
+from collections import deque
+
+def in_order_iterative(root):
+    stack = []
+    current = root
+    while stack or current:
+        if current:
+            stack.append(current)
+            current = current.left
+        else:
+            current = stack.pop()
+            print(current.data, end=' ')
+            current = current.right
+def pre_order_iterative(root):
+    if root is None:
+        return
+    stack = [root]
+    while stack:
+        node = stack.pop()
+        print(node.data, end=' ')
+        if node.right:
+            stack.append(node.right)
+        if node.left:
+            stack.append(node.left)
+
+def post_order_iterative(root):
+    if root is None:
+        return
+    stack1 = [root]
+    stack2 = []
+    while stack1:
+        node = stack1.pop()
+        stack2.append(node)
+        if node.left:
+            stack1.append(node.left)
+        if node.right:
+            stack1.append(node.right)
+    while stack2:
+        print(stack2.pop().data, end=' ')
+
+def bfs_iterative(root):
+    if root is None:
+        return
+    queue = deque([root])
+    while queue:
+        node = queue.popleft()
+        print(node.data, end=' ')
+        if node.left:
+            queue.append(node.left)
+        if node.right:
+            queue.append(node.right)
+
+
+
+
+
+#+______________________________________________________________________________________________________________________________+
 
 # This function builds a Binary Tree from a list of values assuming the tree is stored in level-order (like a binary heap).
 
