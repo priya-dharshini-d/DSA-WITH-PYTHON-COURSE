@@ -10,12 +10,14 @@ class Node:
 def insert(root, key):
     if root is None:
         return Node(key)
-    if root.val == key:         #🔸 Duplicate key — BSTs usually don't allow duplicates.🔸 So we return the current node unchanged, without inserting anything.
-        return root
-    if root.val < key:
-        root.right = insert(root.right, key)
-    else:
+
+    if key < root.val:
         root.left = insert(root.left, key)
+    elif key > root.val:
+        root.right = insert(root.right, key)
+        
+    # If key == root.val, do nothing (no duplicates in BST)
+
     return root
 
 
@@ -122,6 +124,7 @@ inorder(r)
 """ 
 The time complexity of inorder traversal is O(h), where h is the height of the tree.
 The Auxiliary space is O(1)
+
 """
 
 #+________________________________________________________________________________________________________________________+
