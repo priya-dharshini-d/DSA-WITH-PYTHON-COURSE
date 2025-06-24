@@ -1,75 +1,99 @@
-class Heap:
+class MaxHeap:
     def __init__(self):
-        self.heapList = [0]  # Index 0 is dummy
+        self.heap = [0]  # Dummy at index 0 for easier index math
         self.size = 0
 
-    def parent(self, index):
+    def get_parent_index(self, index):
         return index // 2
 
-    def left_child(self, index):
+    def get_left_child_index(self, index):
         return 2 * index
 
-    def right_child(self, index):
+    def get_right_child_index(self, index):
         return 2 * index + 1
 
     def get_max(self):
-        if self.size == 0:
-            return None
-        return self.heapList[1]
+        return None if self.size == 0 else self.heap[1]
 
-    def percolate_up(self, i):
-        while i // 2 > 0:
-            if self.heapList[i] > self.heapList[i // 2]:  # > for max-heap
-                self.heapList[i], self.heapList[i // 2] = self.heapList[i // 2], self.heapList[i]
-            i = i // 2
+    def bubble_up(self, index):
+        while index > 1:
+            parent = self.get_parent_index(index)
+            if self.heap[index] > self.heap[parent]:
+                self.heap[index], self.heap[parent] = self.heap[parent], self.heap[index]
+            index = parent
 
-    def insert(self, item):
-        self.heapList.append(item)
+    def insert(self, value):
+        self.heap.append(value)
         self.size += 1
-        self.percolate_up(self.size)
+        self.bubble_up(self.size)
 
-    def percolate_down(self, i):
-        while (i * 2) <= self.size:
-            max_child = self.max_child(i)
-            if self.heapList[i] < self.heapList[max_child]:  # < for max-heap
-                self.heapList[i], self.heapList[max_child] = self.heapList[max_child], self.heapList[i]
-            i = max_child
+    def bubble_down(self, index):
+        while index * 2 <= self.size:
+            larger_child = self.get_larger_child_index(index)
+            if self.heap[index] < self.heap[larger_child]:
+                self.heap[index], self.heap[larger_child] = self.heap[larger_child], self.heap[index]
+            index = larger_child
 
-    def max_child(self, i):
-        if i * 2 + 1 > self.size:
-            return i * 2
+    def get_larger_child_index(self, index):
+        left = self.get_left_child_index(index)
+        right = self.get_right_child_index(index)
+        if right > self.size:
+            return left
+        
+        if self.heap[left] > self.heap[right]:
+            return left 
         else:
-            if self.heapList[i * 2] > self.heapList[i * 2 + 1]:  # > for max-heap
-                return i * 2
-            else:
-                return i * 2 + 1
+            return right
 
     def delete_max(self):
         if self.size == 0:
             return None
-        retval = self.heapList[1]
-        self.heapList[1] = self.heapList[self.size]
+        max_value = self.heap[1]
+        self.heap[1] = self.heap[self.size]
+        self.heap.pop()
         self.size -= 1
-        self.heapList.pop()
-        self.percolate_down(1)
-        return retval
+        
+        self.bubble_down(1)
+        return max_value
 
-    def build_heap_from_array(self, A):  # O(n) build-heap
-        i = len(A) // 2
-        self.size = len(A)
-        self.heapList = [0] + A[:]
-        while i > 0:
-            self.percolate_down(i)
-            i -= 1
+    def build_from_list(self, nums):
+        self.size = len(nums)
+        self.heap = [0] + nums[:]
+        for i in range(self.size // 2, 0, -1):
+            self.bubble_down(i)
 
-h = Heap()
-h.build_heap_from_array([9, 5, 6, 2, 3])
-print("Max Heap array:", h.heapList[1:])  # Ignore dummy at index 0
+# ------------------ Test Code ------------------
 
-h.insert(10)
-print("After insert(10):", h.heapList[1:])
+heap = MaxHeap()
+heap.build_from_list([9, 5, 6, 2, 3])
+print("Max Heap:", heap.heap[1:])
 
-print("Max element (peek):", h.get_max())
+heap.insert(10)
+print("After insert(10):", heap.heap[1:])
 
-print("Deleted max:", h.delete_max())
-print("After delete_max():", h.heapList[1:])
+print("Peek max:", heap.get_max())
+
+print("Deleted max:", heap.delete_max())
+print("After delete_max():", heap.heap[1:])
+
+
+"""
+ Why is it helpful?
+ 
+In a binary heap, for any element at index i:
+
+Parent is at i // 2
+
+Left child is at 2 * i
+
+Right child is at 2 * i + 1
+
+These formulas work only if indexing starts at 1 (not 0). So by adding a dummy at index 0:
+
+The actual heap starts from index 1
+
+Index math becomes clean and avoids needing special cases
+
+
+
+"""
